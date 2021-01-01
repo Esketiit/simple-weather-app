@@ -8,17 +8,21 @@ if(!address) {
   console.log("please provide an address")
 } else {
   // because geocode() and forecast() take callback functions, they can be chained together
-  geocode(address, (error, data) => {
+  // {latitude, longitude, location} = {} <== this argument destructures an object from axios if it exists,
+  // and has a default of value of {} instead of undefined. trying to destruture undefined throws an error
+  geocode(address, (error, {latitude, longitude, location} = {}) => {
     if (error) {
       return error
     }
-    forecast(data.latitude, data.longitude, (error, forecastData) => {
+
+    // console.log(latitude, longitude, location)
+    forecast(latitude, longitude, (error, forecastData) => {
       if (error) {
         console.log(error)
         return error
       }
 
-      console.log(data.location)
+      console.log(location)
       console.log(forecastData)
     })
   })

@@ -6,11 +6,11 @@ const key = require('../key.js')
 const geocode = (address, callback) => {
   let url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${key.maps}&limit=1`
   axios.get(url)
-  .then(resp => {
+  .then(({data})=> {
     // console.log("geocode good")
-    let location = resp.data.features[0].place_name
-    let long = resp.data.features[0].center[0]
-    let lat = resp.data.features[0].center[1]
+    let location = data.features[0].place_name
+    let long = data.features[0].center[0]
+    let lat = data.features[0].center[1]
 
     callback(undefined, {
       latitude: lat,
